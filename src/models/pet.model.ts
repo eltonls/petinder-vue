@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export default class Pet{
     constructor(
         public name: string = '',
@@ -9,17 +8,4 @@ export default class Pet{
         public imageCat: string,
         public id: string
     ){}
-=======
-
-
-class Pet {
-    constructor(
-        public id?: number,
-        public name?: string,
-        public age?: number,
-        public breed?: string,
-        public weight?: number,
-        public ownerId?: number
-    ) {}
->>>>>>> e52b306 ((feature) [Frontend] added axios and rxjs config)
 }
