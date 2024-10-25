@@ -1,7 +1,7 @@
 import type { Observable } from 'rxjs'
 import api from "../api-config/rxjs";
 import type Pet from '@/models/pet.model'
-export class PetRest{
+export class PetRest {
 
     
     getAllPets(): Observable<any> {
