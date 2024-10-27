@@ -5,7 +5,7 @@ export default{
   data(){
     return{
       pets: [] as Array<Pet>,
-      size: 10,
+      size: 12,
       total: 0,
       isLoading: true
     }
@@ -13,17 +13,17 @@ export default{
 
   methods:{
     getAllPets():void {
-      this.service.pets.pipe().subscribe({
-        next: (response) => {
-          this.pets = response.data;
-          this.total = this.pets.length;
-          setTimeout(() => {
-            this.isLoading = false;
-          }, 700);
-        }
-      });
+      // this.service.pets.pipe().subscribe({
+      //   next: (response) => {
+      //     this.pets = response.data;
+      //     this.total = this.pets.length;
+      //     setTimeout(() => {
+      //       this.isLoading = false;
+      //     }, 700);
+      //   }
+      // });
 
-      this.service.getAllPets();
+      // this.service.getAllPets();
   },
   },
   computed:{
