@@ -35,12 +35,12 @@ export default{
 
 <template>
   <main>
-   <h1>Home</h1> 
     <DataView :value="pets" data-key="pets" paginator :rows="size" :always-show-paginator="false" :total-records="total">
       <template #list="slotProps">
-        <div class="flex flex-row p-5">
-          <!-- TODO: Add your pet card here  -->
-          <div v-for="pet in slotProps.items" :key="pet.id" class="p-5 bg-blue-500 text-white m-2 w-[1/4] h-48 flex items-center">{{ pet.name }}</div>
+        <div class="py-5 px-24 text-center">
+          <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
+            <PetCard :pet="pet"/>
+          </div>
         </div>
       </template>
       <template #empty>
