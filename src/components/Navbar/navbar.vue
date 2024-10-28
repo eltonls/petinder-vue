@@ -6,7 +6,7 @@
             <span class="text-white !text-4xl animate-slide-in-left hover:text-[#FF8C00] duration-500">Petinder</span>
           </RouterLink>
         </div>
-        <div class="m-4 items-center animate-slide-in-right">
+        <div class="m-4 items-center animate-slide-in-right" v-if="isLogin">
           <Button 
             icon="pi pi-sign-out" 
             severity="warn"
@@ -16,6 +16,18 @@
             size="large" 
             class="!text-white hover:!text-[#FF8C00] hover:duration-500"
             @click="logout()"
+          />
+        </div>
+        <div class="m-4 items-center animate-slide-in-right" v-else>
+          <Button 
+            icon="pi pi-user" 
+            severity="warn"
+            text 
+            rounded
+            label="Fazer login" 
+            size="large" 
+            class="!text-white hover:!text-[#FF8C00] hover:duration-500"
+            @click="redirectToLogin()"
           />
         </div>
       </nav>
@@ -29,12 +41,16 @@
           itemsMenuUser: [
             { label: 'Profile', icon: 'pi pi-user' },
             { label: 'Exit', icon: 'pi pi-search' }
-          ]
+          ],
+          isLogin: true
         }
       },
       methods: {
           logout(): void {
             console.log("Deslogar usuário");
+          },
+          redirectToLogin(): void {
+            this.$router.push('/login');
           }
       }
   }
