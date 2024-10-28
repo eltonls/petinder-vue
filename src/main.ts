@@ -7,6 +7,7 @@ import PrimeVue from 'primevue/config';
 import ToastService from 'primevue/toastservice';
 import Aura from '@primevue/themes/aura';
 import setPrimeComponent from './modules/prime.module';
+import setComponent from './modules/component.module';
 
 const app = createApp(App);
 
@@ -17,6 +18,7 @@ app.use(PrimeVue, {
 });
 
 setPrimeComponent(app);
+setComponent(app);
 
 app.use(ToastService);
 app.use(PrimeVue);
