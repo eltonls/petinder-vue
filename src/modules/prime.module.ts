@@ -5,7 +5,7 @@ import Card from 'primevue/card';
 import Toast from 'primevue/toast';
 import Tag from 'primevue/tag';
 import ProgressSpinner from 'primevue/progressspinner';
-
+import DataView from 'primevue/dataview';
 
 import type { App } from 'vue';
 
@@ -16,4 +16,5 @@ export default function setPrimeComponent(app: App): void {
     app.component('Toast', Toast);
     app.component('Tag', Tag);
     app.component('ProgressSpinner', ProgressSpinner);
+    app.component('DataView', DataView);
 }
