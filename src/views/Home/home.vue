@@ -7,6 +7,7 @@ export default{
       pets: [] as Array<Pet>,
       size: 10,
       total: 0,
+      isLoading: true
     }
   },
 
@@ -16,6 +17,9 @@ export default{
         next: (response) => {
           this.pets = response;
           this.total = this.pets.length;
+          setTimeout(() => {
+            this.isLoading = false;
+          }, 700);
         }
       });
 
@@ -35,7 +39,8 @@ export default{
 
 <template>
   <main>
-    <DataView :value="pets" data-key="pets" paginator :rows="size" :always-show-paginator="false" :total-records="total">
+    <Loader v-if="isLoading" />
+    <DataView :class="isLoading? 'hidden': ''" :value="pets" data-key="pets" paginator :rows="size" :always-show-paginator="false" :total-records="total">
       <template #list="slotProps">
         <div class="py-5 px-24 text-center">
           <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
