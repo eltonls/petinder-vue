@@ -42,7 +42,7 @@
             { label: 'Profile', icon: 'pi pi-user' },
             { label: 'Exit', icon: 'pi pi-search' }
           ],
-          isLogin: true
+          isLogin: false
         }
       },
       methods: {
