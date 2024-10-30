@@ -74,7 +74,7 @@
 import { defineComponent } from "vue";
 import LoginService from "./login.service";
 import { take } from "rxjs";
-import LocalStorageUtil from "@/utils/localStorage.utils";
+import LocalStorageUtil from "@/utils/localStorage.util";
 import useVuelidate from "@vuelidate/core";
 import { email, required } from "@vuelidate/validators";
 
@@ -90,18 +90,15 @@ export default defineComponent({
     submitLogin() {
       this.v$.$validate();
       if (!this.v$.$error) {
-        this.service.user.pipe(take(1)).subscribe((users) => {
-          if (
-            users[0].email === this.emailInput &&
-            users[0].password === this.passwordInput
-          ) {
-            this.localStorage.setItem("user", users[0]);
+        this.service.user.pipe(take(1)).subscribe((user) => {
+          this.localStorage.setItem("user", user.data.session.user);
 
+          if(user.error === null) {
             this.$router.push({ name: "home" });
           }
         });
 
-        this.service.getUserByEmail(this.emailInput);
+        this.service.login(this.emailInput, this.passwordInput);
       }
     },
   },
@@ -134,3 +131,4 @@ export default defineComponent({
   }
 }
 </style>
+  

@@ -15,7 +15,7 @@ export default{
     getAllPets():void {
       this.service.pets.pipe().subscribe({
         next: (response) => {
-          this.pets = response;
+          this.pets = response.data;
           this.total = this.pets.length;
           setTimeout(() => {
             this.isLoading = false;
@@ -23,7 +23,7 @@ export default{
         }
       });
 
-      this.service.getAllPets(); 
+      this.service.getAllPets();
   },
   },
   computed:{
