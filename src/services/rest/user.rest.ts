@@ -1,7 +1,6 @@
 import { fromPromise } from "rxjs/internal/observable/innerFrom";
 import supabase from "../api-config/setup";
 
-
 class UserRest {
     loginWithPassword(email: string, password: string) {
         return fromPromise(supabase.auth.signInWithPassword({
@@ -14,6 +13,12 @@ class UserRest {
         return fromPromise(supabase.auth.signUp({
             email,
             password
+        }))
+    }
+
+    signOut() {
+        return fromPromise(supabase.auth.signOut({
+            scope: 'local'
         }))
     }
 }

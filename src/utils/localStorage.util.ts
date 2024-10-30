@@ -12,6 +12,10 @@ class LocalStorageUtil<T> {
 
     return null;
   }
+
+  removeItem(key: string): void {
+    localStorage.removeItem(key);
+  }
 }
 
 export default LocalStorageUtil;

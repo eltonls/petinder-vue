@@ -29,6 +29,17 @@ class LoginService {
         },
       });
   }
+
+  signOut(): void {
+    this._userRest
+      .signOut()
+      .pipe(take(1))
+      .subscribe({
+        next: (response: any) => {
+          this.user$.next(response);
+        },
+      })
+  }
 }
 
 export default LoginService;
