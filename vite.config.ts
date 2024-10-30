@@ -8,6 +8,7 @@ export default defineConfig(({ mode }) => {
 
   const _API_URL_USER = `${env.VITE_URL_USER ?? ""}`;
   const _API_URL_PET = `${env.VITE_URL_PET ?? ""}`;
+  const _API_URL = `${env.VITE_API_URL ?? ""}`;
 
   return {
     plugins: [vue()],
@@ -18,7 +19,7 @@ export default defineConfig(({ mode }) => {
     },
     server: {
       proxy: {
-        "/api/user": {
+        "/api/users": {
           target: _API_URL_USER,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
