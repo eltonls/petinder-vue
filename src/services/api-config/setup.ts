@@ -1,34 +1,10 @@
-import type { AxiosError, AxiosInstance, AxiosRequestConfig } from "axios";
-import axios from "axios";
+import { createClient } from "@supabase/supabase-js";
 
-function apiConfig(baseUrl: string): AxiosRequestConfig {
-    return {
-        baseURL: baseUrl,
-    }
-}
+const key = import.meta.env.VITE_SUPABASE_KEY;
+const url = import.meta.env.VITE_SUPABASE_URL;
 
-function initAxios(config: AxiosRequestConfig, token?: any): AxiosInstance {
-    const defineInstance = axios.create(config);
-    defineInstance.interceptors.request.use((config) => {
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-    }, (error) => {
-        return Promise.reject(error);
-    });
+const supabase = createClient(url, key)
 
-    defineInstance.interceptors.response.use((response) => {
-        return response;
-    }, (error: AxiosError) => {
-        return Promise.reject(error);
-    });
+console.log(supabase);
 
-    return defineInstance;
-}
-
-function api(baseURL: string = "/api", token?: any): AxiosInstance {
-    return initAxios(apiConfig(baseURL), token);
-}
-
-export { api }
+export default supabase;

@@ -2,7 +2,7 @@
     <main class="m-4">
         <Card class="min-w-60 w-[20vw] max-w-80 overflow-hidden rounded border-2">
             <template #header>
-                <img :src="pet.imageCat" alt="pet image">
+                <img :src="pet.image_url" alt="pet image">
             </template>
             <template #title>
                 <span class="!font-bold line-clamp-1 text-start">{{ pet.name }}</span>
