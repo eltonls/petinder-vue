@@ -1,9 +1,9 @@
 export default class Pet{
     constructor(
-        public name: string = '',
-        public breed: Breed,
-        public age: number,
-        public description: string ,
+        public name?: string,
+        public breed?: Breed,
+        public age?: number,
+        public description?: string ,
         public gender?: GenderPet,
         public image_url?: string,
         public created_at: Date = new Date,
