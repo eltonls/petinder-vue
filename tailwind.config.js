@@ -20,6 +20,9 @@ export default {
         'slide-in-left': 'slideInLeft 1s ease-out forwards',
         'slide-in-right': 'slideInRight 1s ease-out forwards',
       },
+      colors: {
+        filterBar: {home: '#414267'}
+      }
     },
   },
   plugins: [],

@@ -18,7 +18,7 @@ class PetRest {
                 query = query.gte("age", [4]).lte("age", [6]);
             }
             else  {
-                query = query.gte("age", [6]).lte("age", [100]);
+                query = query.gte("age", [7]).lte("age", [100]);
             }
         }
 
@@ -35,7 +35,7 @@ class PetRest {
 
     updatePet(pet: Pet) {
         return fromPromise(
-        supabase.from("pets").upsert(pet).eq("id", pet.id)
+        supabase.from("pets").update(pet).eq("id", pet.id)
         );
     }
 
