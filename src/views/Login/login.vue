@@ -1,7 +1,7 @@
 <template>
   <main>
     <div
-      class="p-10 rounded w-1/2 h-[100vh] bg-white bg-opacity-5 flex flex-col justify-center items-center"
+      class="p-10 rounded lg:w-1/2 h-[100vh] bg-white bg-opacity-5 flex flex-col justify-center items-center"
     >
       <div class="flex gap-2">
         <h1 class="font-bold tracking-wide mb-10 text-2xl">
@@ -22,7 +22,7 @@
           <p
             class="text-xs text-red-400 transition-all"
             :class="
-              v$.emailInput.$error ? 'opacity-100' : '-translate-y-6 opacity-0'
+              v$.emailInput.$error ? 'opacity-100' : '-translate-y-6 opacity-0 invisible'
             "
           >
             Digite um email válido
@@ -37,7 +37,7 @@
           <p
             class="text-xs text-red-400"
             :class="
-              v$.passwordInput.$error ? 'opacity-100' : '-translate-y-6 opacity-0'
+              v$.passwordInput.$error ? 'opacity-100' : '-translate-y-6 opacity-0 invisible'
             "
           >
             Digite sua senha
@@ -62,11 +62,14 @@
         </button>
       </form>
     </div>
-    <img
-      src="@/assets/images/pug2.png"
-      alt=""
-      class="w-1/2 absolute right-2 bottom-0 bg-orange-400"
-    />
+    <div class="hidden lg:w-1/2 h-screen absolute right-0 bottom-0 bg-orange-400 lg:flex justify-center items-end">
+      <img
+        src="@/assets/images/pug2.png"
+        alt=""
+        class="object-cover"
+      />
+    </div>
+    
   </main>
 </template>
 
