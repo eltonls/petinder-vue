@@ -1,6 +1,7 @@
 <script  lang="ts">
 import type Pet from '@/models/pet.model';
 import {HomeService} from '../Home/home.service'
+import { AgeRange, Breed, GenderPet } from '@/models/pet.model';
 export default{
   data(){
     return{
@@ -12,19 +13,16 @@ export default{
   },
 
   methods:{
-    getAllPets():void {
-      // this.service.pets.pipe().subscribe({
-      //   next: (response) => {
-      //     this.pets = response.data;
-      //     this.total = this.pets.length;
-      //     setTimeout(() => {
-      //       this.isLoading = false;
-      //     }, 700);
-      //   }
-      // });
-
-      // this.service.getAllPets();
-  },
+    getPets():void {
+      this.service.pets.pipe().subscribe({
+        next: (response) => {
+          this.pets = response.data;
+          this.total = this.pets.length;
+          this.isLoading = false;
+        }
+      })
+      this.service.getPets(undefined, undefined, undefined)
+    },
   },
   computed:{
     service(): HomeService{
@@ -32,7 +30,7 @@ export default{
     }
   },
   mounted(){
-    this.getAllPets()
+    this.getPets()
   }
 }
 </script>
@@ -42,16 +40,16 @@ export default{
     <Loader v-if="isLoading" />
     <DataView :class="isLoading? 'hidden': ''" :value="pets" data-key="pets" paginator :rows="size" :always-show-paginator="false" :total-records="total">
       <template #list="slotProps">
-        <div class="py-5 px-24 text-center">
+        <div class="px-24 py-5 text-center">
           <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
             <PetCard :pet="pet"/>
           </div>
         </div>
       </template>
       <template #empty>
-        <div class="mx-auto flex flex-col justify-center items-center p-8 m-5 rounded-full w-80">
+        <div class="flex flex-col items-center justify-center p-8 m-5 mx-auto rounded-full w-80">
           <img src="@/assets/images/empty.png" alt="" class="w-60 h-60">
-          <h4 class="font-bold text-xl text-gray-400">Ah... não tem pet aqui</h4>
+          <h4 class="text-xl font-bold text-gray-400">Ah... não tem pet aqui</h4>
         </div>
       </template>
     </DataView>

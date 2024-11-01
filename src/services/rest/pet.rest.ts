@@ -1,27 +1,47 @@
-// import type { Observable } from 'rxjs'
-// import api from "../api-config/rxjs";
-// import type Pet from '@/models/pet.model'
-// export class PetRest {
+import { fromPromise } from "rxjs/internal/observable/innerFrom";
+import supabase from "../api-config/setup";
+import Pet, { AgeRange, Breed, GenderPet } from "@/models/pet.model";
 
+class PetRest {
+    getPets(gender?: GenderPet, ageRange?: AgeRange, breed?: Breed) {
+        let query = supabase.from("pets").select("");
     
-//     getAllPets(): Observable<any> {
-//         const url :string = `/pets`
-//         return api.get(url)
-//     }
-//     getPetById(id:number) : Observable<any> {
-//         const url:string = `/${id}`
-//         return api.get(url)
-//     }
-//     registerPet(pet:Pet): Observable<any>{
-//         const url:string = `/`
-//         return api.post(url,pet)
-//     }
-//     updatePet(pet:Pet): Observable<any>{
-//         const url:string = `/`
-//         return api.put(url,pet)
-//     }
-//     deletePet(id:number): Observable<any>{
-//         const url:string = `/${id}`
-//         return api.deleteR(url)
-//     }
-// }
+        if (gender) {
+        query = query.eq("gender", gender);
+        }
+    
+        if (ageRange) {
+            if (ageRange == AgeRange.Young) {
+                query = query.gte("age", [0]).lte("age", [3]);
+            }
+            else if (ageRange == AgeRange.Adult) {
+                query = query.gte("age", [4]).lte("age", [6]);
+            }
+            else  {
+                query = query.gte("age", [6]).lte("age", [100]);
+            }
+        }
+
+        if (breed) {
+            query = query.eq("breed", breed)
+        }
+    
+        return fromPromise(query);
+    }
+
+    addPet(pet: Pet) {
+        return fromPromise(supabase.from("pets").insert(pet));
+    }
+
+    updatePet(pet: Pet) {
+        return fromPromise(
+        supabase.from("pets").upsert(pet).eq("id", pet.id)
+        );
+    }
+
+    deletePet(id: number) {
+        return fromPromise(supabase.from("pets").delete().eq("id", id));
+    }
+}
+
+export default PetRest;
