@@ -1,5 +1,4 @@
 import './style.css'
-
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -22,6 +21,7 @@ setPrimeComponent(app);
 setComponent(app);
 
 app.use(ToastService);
-app.use(PrimeVue);
 app.use(router);
 app.mount('#app');
+
+export default app;

@@ -3,6 +3,14 @@
     <div
       class="p-10 rounded lg:w-1/2 h-[100vh] bg-white bg-opacity-5 flex flex-col justify-center items-center"
     >
+    <RouterLink to="/" >
+      <button
+        class="items-center absolute top-0 left-0 flex text-2xl font-medium gap-3 text-orange-400 py-3 rounded px-10"
+      >
+        <i class="pi pi-arrow-left" style="font-size: 1.3rem"></i>
+        <p>Voltar</p>
+      </button>
+    </RouterLink>
       <div class="flex gap-2">
         <h1 class="font-bold tracking-wide mb-10 text-2xl">
           <span class="text-orange-400">Pet</span>inder
@@ -53,7 +61,10 @@
             offLabel="Não"
           />
         </div>
-
+        <span class="flex gap-2 mb-4 justify-center">
+          <p>Não possui cadastro?</p>
+          <RouterLink to="/register" class="text-blue-600">Cadastre-se</RouterLink>
+        </span>
         <button
           type="submit"
           class="bg-orange-400 px-10 py-3 rounded font-bold"
