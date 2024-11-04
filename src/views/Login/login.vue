@@ -21,6 +21,7 @@
         <div class="mb-3">
           <FloatLabel class="mb-1">
             <InputText
+                class="w-full"
               id="email"
               v-model="emailInput"
               :class="v$.emailInput.$error ?? '!border-red-300'"
@@ -39,7 +40,7 @@
 
         <div>
           <FloatLabel class="mb-1">
-            <InputText id="password" type="password" v-model="passwordInput" />
+            <InputText id="password" type="password" v-model="passwordInput" class="w-full" />
             <label for="password">Senha</label>
           </FloatLabel>
           <p
@@ -67,7 +68,7 @@
         </span>
         <button
           type="submit"
-          class="bg-orange-400 px-10 py-3 rounded font-bold"
+          class="bg-orange-400 px-10 py-3 rounded font-bold text-white"
         >
           Login
         </button>
