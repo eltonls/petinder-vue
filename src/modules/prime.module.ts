@@ -13,6 +13,8 @@ import ToggleButton from 'primevue/togglebutton';
 import Select from 'primevue/select';
 import SelectButton from 'primevue/selectbutton';
 import Dialog from 'primevue/dialog';
+import Menubar from 'primevue/menubar';
+import Avatar from 'primevue/avatar';
 
 import type { App } from 'vue';
 
@@ -32,4 +34,6 @@ export default function setPrimeComponent(app: App): void {
     app.component('Select', Select);
     app.component('SelectButton', SelectButton);
     app.component('Dialog', Dialog);
+    app.component('MenuBar', Menubar);
+    app.component('Avatar', Avatar);
 }

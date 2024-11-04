@@ -1,77 +1,153 @@
 <template>
   <main>
     <nav
-      class="flex items-center justify-between flex-wrap bg-blue-950 p-4 flex-shrink-0"
+      class="flex items-center justify-between flex-wrap py-5 px-2 font-sans bg-[#7c7ef6]"
     >
-      <div class="font-bold m-4 animate-slide-in-left">
+      <div class="font-bold animate-slide-in-left">
         <RouterLink to="/">
-          <span
-            class="text-white !text-4xl animate-slide-in-left hover:text-[#FF8C00] duration-500"
-            >Petinder</span
-          >
+          <p class="text-2xl font-display text-white">Petinder</p>
         </RouterLink>
       </div>
-      <div class="m-4 items-center animate-slide-in-right" v-if="isLogged">
+      <ul class="flex gap-5 text-white font-bold">
+        <li>
+          <RouterLink to="/pets" class="hover:text-orange-400">
+            <p>Pets</p>
+          </RouterLink>
+        </li>
+        <li>
+          <RouterLink to="/about" class="hover:text-orange-400">
+            <p>Sobre Nós</p>
+          </RouterLink>
+        </li>
+      </ul>
+      <MenuBar
+        :model="itemsMenuUser"
+        class="!bg-transparent !border-none !text-white !p-0 animate-slide-in-right z-50"
+        v-if="!isLogged"
+      >
+        <template #item="{ item, props, hasSubmenu, root }">
+          <a v-ripple class="flex items-center" v-bind="props.action">
+            <span v-if="item.label" class="font-bold tracking-wide">{{
+              item.label
+            }}</span>
+            <i
+              v-if="item.icon && item.icon !== 'pi pi-user'"
+              class="hover:text-orange-500"
+              :class="item.icon"
+              style="font-size: 1.5rem"
+            ></i>
+            <div
+              v-if="item.icon === 'pi pi-user'"
+              class="flex gap-2 items-center justify-center hover:bg-transparent"
+            >
+              <Avatar
+                image="https://primefaces.org/cdn/primevue/images/avatar/amyelsner.png"
+                shape="circle"
+              />
+              <div class="flex flex-col text-xs">
+                <p>{{  userName }}</p>
+                <p>{{ userEmail }}</p>
+              </div>
+              <i
+                v-if="hasSubmenu"
+                :class="[
+                  'pi pi-angle-down ml-auto',
+                  { 'pi-angle-down': root, 'pi-angle-right': !root },
+                ]"
+              ></i>
+            </div>
+            <Badge
+              v-if="item.badge"
+              :class="{ 'ml-auto': !root, 'ml-2': root }"
+              :value="item.badge"
+            />
+            <span
+              v-if="item.shortcut"
+              class="ml-auto border border-surface rounded bg-emphasis text-muted-color text-xs p-1"
+              >{{ item.shortcut }}</span
+            >
+          </a>
+        </template>
+      </MenuBar>
+      <div v-else class="flex gap-4">
         <Button
-          icon="pi pi-sign-out"
-          severity="warn"
-          text
-          rounded
-          label="Sair"
-          size="large"
-          class="!text-white hover:!text-[#FF8C00] hover:duration-500"
-          @click="logout()"
-        />
-      </div>
-      <div class="m-4 items-center animate-slide-in-right" v-else>
+          class="!bg-transparent !border-orange-500 !outline-none !transition-all !duration-200 hover:rounded-none"
+          @click="redirectToRegister"
+        >
+          Cadastrar-se
+        </Button>
         <Button
-          icon="pi pi-user"
-          severity="warn"
-          text
-          rounded
-          label="Fazer login"
-          size="large"
-          class="!text-white hover:!text-[#FF8C00] hover:duration-500"
-          @click="redirectToLogin()"
-        />
+          class="!bg-orange-500 !border-none !outline-none !transition-all !duration-200 hover:rounded-none"
+          @click="redirectToLogin"
+        >
+          Fazer Login
+        </Button>
       </div>
     </nav>
   </main>
 </template>
 <script lang="ts">
-import User from "@/models/user.model";
 import LocalStorageUtil from "@/utils/localStorage.util";
+
 export default {
   name: "NavBar",
   data() {
     return {
       itemsMenuUser: [
-        { label: "Profile", icon: "pi pi-user" },
-        { label: "Exit", icon: "pi pi-search" },
+        {
+          label: "Mensagens",
+          icon: "pi pi-envelope",
+        },
+        {
+          label: "Notificações",
+          icon: "pi pi-bell",
+        },
+        {
+          label: "",
+          icon: "pi pi-user",
+          items: [
+            {
+              label: "Perfil",
+              icon: "",
+            },
+            {
+              label: "Fazer Logoff",
+              icon: "",
+              command: () => { this.logout() }
+            },
+          ],
+        },
       ],
+      userName: "",
+      userEmail: "",
       isLogged: false,
-      localStorage: new LocalStorageUtil(),
-      user: new User(),
     };
   },
   methods: {
     logout(): void {
-      this.localStorage.removeIten("user");
-      this.localStorage.removeIten("sb-antssactxehyqfavecgh-auth-token");
-      this.isLogged = false;
+      this.localStorage.removeItem("user");
+      this.localStorage.removeItem("sb-antssactxehyqfavecgh-auth-token");
+      this.isLogged = true;
+    },
+    getUserInfo(): void {
+      const user = this.localStorage.getItem("user");
+      this.userName = "Elton R. Soares";
+      this.userEmail = user.email;
     },
     redirectToLogin(): void {
       this.$router.push("/login");
     },
-    hasUserLogged(): void {
-      const user: any = this.localStorage.getItem("user");
-      if (user) {
-        this.isLogged = true;
-      }
+    redirectToRegister(): void {
+      this.$router.push("/register");
     },
   },
   mounted() {
-    this.hasUserLogged();
+    this.getUserInfo();
+  },
+  computed: {
+    localStorage(): LocalStorageUtil<any> {
+      return new LocalStorageUtil<any>();
+    },
   },
 };
 </script>
