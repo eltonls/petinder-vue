@@ -9,8 +9,9 @@ import CascadeSelect from 'primevue/cascadeselect';
 import DataView from 'primevue/dataview';
 import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
-import Select from 'primevue/select';
 import ToggleButton from 'primevue/togglebutton';
+import Select from 'primevue/select';
+import SelectButton from 'primevue/selectbutton';
 
 import type { App } from 'vue';
 
@@ -22,10 +23,11 @@ export default function setPrimeComponent(app: App): void {
     app.component('Tag', Tag);
     app.component('ProgressSpinner', ProgressSpinner);
     app.component('CascadeSelect',CascadeSelect)
-    app.component('Select', Select)
     app.component('InputText', InputText);
     app.component('DataView', DataView);
     app.component('FloatLabel', FloatLabel);
-    app.component("ToggleButton", ToggleButton)
-
+    app.component('InputText', InputText);
+    app.component("ToggleButton", ToggleButton);
+    app.component('Select', Select);
+    app.component('SelectButton', SelectButton);
 }

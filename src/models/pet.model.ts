@@ -4,11 +4,12 @@ export default class Pet{
         public breed: Breed,
         public age: number,
         public description: string ,
-        public gender: GenderPet,
-        public image_url: string,
+        public gender?: GenderPet,
+        public image_url?: string,
         public created_at: Date = new Date,
         public id?: number,
-        public owner_id?: string
+        public owner_id?: string,
+        public user_id?: string
     ){}
 }
 
