@@ -11,6 +11,7 @@ import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import Select from 'primevue/select';
 import ToggleButton from 'primevue/togglebutton';
+
 import type { App } from 'vue';
 
 export default function setPrimeComponent(app: App): void {

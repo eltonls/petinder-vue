@@ -12,6 +12,9 @@ class LocalStorageUtil<T> {
 
     return null;
   }
+  removeIten(key: string): void{
+    localStorage.removeItem(key)
+  }
 }
 
 export default LocalStorageUtil;

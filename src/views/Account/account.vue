@@ -162,19 +162,22 @@ export default defineComponent({
       this.service.updateUser(this.userId() as string, userFormated);
     },
     getUserById() {
-      this.service.user.pipe(take(1)).subscribe({
-        next: (response) => {
-          if (response.data.length > 0) {
-            this.user = response.data[0];
-            this.isUpdateUser = true;
-          }
-        },
-      });
-      this.service.getUserById(this.userId());
+      if(this.userId()){
+        this.service.user.pipe(take(1)).subscribe({
+          next: (response) => {
+            if (response.data.length > 0) {
+              this.user = response.data[0];
+              this.isUpdateUser = true;
+            }
+          },
+        });
+        this.service.getUserById(this.userId());
+
+      }
     },
     userId() {
       const user: any = this.localStorage.getItem("user");
-      return user.id;
+      return user?.id;
     },
   },
   computed: {
