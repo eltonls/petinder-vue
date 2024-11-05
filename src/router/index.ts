@@ -3,6 +3,7 @@ import Home from '../views/Home/home.vue'
 import Login from '../views/Login/login.vue'
 import Register from '@/views/Register/register.vue'
 import Profile from '@/views/Profile/profile.vue'
+import PetRegister from '@/views/Pet-register/pet-register.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,7 +39,15 @@ const router = createRouter({
       meta: {
         hasNavBar: true
       }
-    }
+    },
+    {
+      path: '/pet-register',
+      name: 'pet-register',
+      component: PetRegister,
+      meta: {
+        hasNavBar: true
+      }
+    },
   ]
 })
 
