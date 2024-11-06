@@ -4,7 +4,7 @@ import Pet, { AgeRange, Breed, GenderPet } from "@/models/pet.model";
 
 class PetRest {
     getPets(gender?: GenderPet, ageRange?: AgeRange, breed?: Breed) {
-        let query = supabase.from("pets").select("");
+        let query = supabase.from("pets").select("").is("owner_id", null);
     
         if (gender) {
         query = query.eq("gender", gender);

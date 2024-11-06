@@ -5,7 +5,7 @@ export default class User {
     public password?: string,
     public adress?: string,
     public phone?: string ,
-    public id?: number,
+    public id?: string,
     public auth_id? :string,
     public created_at?: Date
   ) {}
