@@ -22,30 +22,8 @@
           </div>
         </template>
       </DataView>
+      <DetailDialog :isVisible="isVisibleDetailDialog" :pet="adoptedPet" :pageType="'home'" @closeDialog="setStateDialog" @adoptPet="adoptPet" />
     </section>
-
-    <Dialog v-model:visible="isVisibleAdoptDialog" modal
-      class="h-[50vh] !bg-white w-[480px] overflow-auto justify-between">
-      <template #header>
-        <span class="flex items-center justify-center w-full h-full text-lg font-semibold">
-          Confimar adoção de {{ adoptedPet.name }}
-        </span>
-      </template>
-      <section class="flex flex-col justify-center">
-        <div class="w-full h-56 mb-3">
-          <img :src="adoptedPet.image_url" alt="pet image" class="w-auto h-56 mx-auto rounded-md drop-shadow">
-        </div>
-        <div class="text-justify text-black">{{ adoptedPet.description }}</div>
-      </section>
-      <template #footer>
-        <div class="flex gap-4">
-          <Button label="Cancelar" @click="setStateDialog(false)"
-            class="!bg-white !border-orange-400 !text-orange-400 hover:!bg-orange-50" />
-          <Button label="Confimar" @click="adoptPet(adoptedPet)"
-            class="!bg-orange-400 !border-orange-400 hover:!bg-orange-500" />
-        </div>
-      </template>
-    </Dialog>
   </main>
 </template>
 <script lang="ts">
@@ -56,6 +34,7 @@ import type User from "@/models/user.model";
 import Adoption from "@/models/adoption.model";
 import { take } from "rxjs";
 import { Toasts } from "@/utils/toast.util";
+import DetailDialog from "@/components/DetailDialog/detailDialog.vue";
 export default {
   data() {
     return {
@@ -66,7 +45,7 @@ export default {
       selectedBreed: undefined,
       selectedGender: undefined,
       selectedAge: undefined,
-      isVisibleAdoptDialog: false,
+      isVisibleDetailDialog: false,
       adoptedPet: new Pet(),
       showToast: new Toasts(),
       adoption: new Adoption(),
@@ -111,14 +90,14 @@ export default {
       }
     },
     setStateDialog(state: boolean): void {
-      this.isVisibleAdoptDialog = state;
+      this.isVisibleDetailDialog = state;
     },
     adoptPet(pet: Pet): void {
       const user = this.localStorage.getItem("user") as User;
       this.adoption.pet_id = pet.id as number;
       this.adoption.user_id = user.id as string;
-      if (!this.completeUserRegistration) {
-        this.$router.push('/account')
+      if(!this.completeUserRegistration){
+        this.$router.push('/profile')
       }
       else {
 

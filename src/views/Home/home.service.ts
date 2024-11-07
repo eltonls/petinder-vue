@@ -10,7 +10,7 @@ export class HomeService {
   constructor(
     private _petRest = new PetRest(),
     private _AdoptionRest = new AdoptionRest()
-  ) {}
+  ) { }
 
   private pets$: Subject<any> = new Subject<any>();
   private user$: Subject<any> = new Subject<any>();
@@ -53,9 +53,9 @@ export class HomeService {
       });
   }
 
-  deletePet(id: number): void {
+  deletePet(pet: Pet): void {
     this._petRest
-      .deletePet(id)
+      .deletePet(pet)
       .pipe(take(1))
       .subscribe({
         next: (response) => {
@@ -63,6 +63,7 @@ export class HomeService {
         },
       });
   }
+
   registerAdoption(adoption: Adoption): void {
     this._AdoptionRest
       .registerAdoption(adoption)
@@ -73,6 +74,7 @@ export class HomeService {
         },
       });
   }
+
   getAdoptionById(userId: string, petId: number): void {
     this._AdoptionRest
       .getAdoptionById(userId, petId)
@@ -83,6 +85,7 @@ export class HomeService {
         },
       });
   }
+
   getUserById(id: string): void {
     this._userRest
       .getUserById(id)
@@ -90,6 +93,39 @@ export class HomeService {
       .subscribe({
         next: (response) => {
           this.user$.next(response);
+        },
+      });
+  }
+
+  getRegisteredPetsByUser(id: string): void {
+    this._petRest
+      .getRegisteredPetsByUser(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.pets$.next(response)
+        }
+      })
+  }
+
+  getAdoptedPetsByOnwer(id: string): void {
+    this._petRest
+      .getAdoptedPetsByOnwer(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.pets$.next(response)
+        }
+      })
+  }
+
+  deleteAdoption(id: number): void {
+    this._AdoptionRest
+      .deleteAdoption(id)
+      .pipe(take(1))
+      .subscribe({
+        next: (response) => {
+          this.pets$.next(response);
         },
       });
   }

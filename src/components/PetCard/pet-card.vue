@@ -1,18 +1,18 @@
 <template>
-    <main class="m-4">
+    <main class="m-2 md:m-4">
         <section
-            class="w-32 h-48 sm:w-52 sm:h-72 md:w-[290px] md:h-[385px] overflow-hidden rounded-xl shadow border border-gray-400 relative cursor-pointer"
+            class="w-32 h-48 sm:w-52 sm:h-72 xl:w-[290px] xl:h-[385px] overflow-hidden rounded-xl shadow border border-gray-400 relative cursor-pointer"
             @mouseover="showDetail(true)" @mouseleave="showDetail(false)" @click="sendPet()">
             <div class="absolute top-0 left-0 w-full h-full">
                 <img :src="pet.image_url" alt="pet image" class="object-cover w-full h-full">
             </div>
             <div class="absolute bottom-0 w-full bg-black opacity-50"
-                :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-200 ease-linear']" />
+                :class="[isVisible ? 'h-48 sm:h-72 xl:h-[385px]' : 'h-20 sm:h-28 xl:h-[154px]', 'transition-all duration-200 ease-linear']" />
             <div class="absolute bottom-0 w-full px-2 py-4 text-white bg-transparent"
-                :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-300 ease-int-out']">
+                :class="[isVisible ? 'h-48 sm:h-72 xl:h-[385px]' : 'h-20 sm:h-28 xl:h-[154px]', 'transition-all duration-300 ease-int-out']">
                 <div :class="isVisible ? 'flex-col sm:flex-row' : 'sm:flex'"
                     class="gap-2 flex items-center sm:max-h-8 mb-1.5">
-                    <Tag class="!bg-orange-600 w-fit max-w-34 !text-white truncate md:!line-clamp-1 px-1"
+                    <Tag class="!bg-orange-600 w-fit max-w-34 !text-white !line-clamp-1 px-1"
                         :value="pet.breed" rounded>
                         <v-icon v-if="isMobile()" :name="setIconBreed(pet.breed!)"></v-icon>
                     </Tag>
@@ -26,7 +26,7 @@
                 <div class="w-full">
                     <h2 class="w-full text-lg font-bold text-start"
                         :class="[isVisible ? 'line-clamp-2' : 'line-clamp-1']">{{ pet.name }}</h2>
-                    <p class="text-justify h-auto my-1.5 hidden md:flex"
+                    <p class="text-justify h-auto my-1.5 hidden xl:flex"
                         :class="[isVisible ? 'text-ellipsis sm:flex' : 'truncate', 'transition-all duration-200 ease-linear ']">
                         {{ pet.description }}</p>
                 </div>
@@ -44,6 +44,10 @@ export default {
     props: {
         pet: {
             type: {} as PropType<Pet>,
+            required: true
+        },
+        pageType: {
+            type: String as PropType<string>,
             required: true
         }
     },

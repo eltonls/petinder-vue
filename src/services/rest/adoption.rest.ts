@@ -23,8 +23,8 @@ export default class AdoptionRest {
       supabase.from("adoption").update(adoption).eq("id", adoption.id)
     );
   }
-  deleteAdoption(id: string): Observable<any> {
-    return fromPromise(supabase.from("adoption").delete().eq("id", id));
+  deleteAdoption(id: number): Observable<any> {
+    return fromPromise(supabase.from("adoption").delete().eq("pet_id", id));
   }
   getAdoptionById(user_id: string, pet_id: number): Observable<any> {
     return fromPromise(
