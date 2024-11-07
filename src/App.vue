@@ -1,5 +1,6 @@
 <template>
   <main>
+    <Toast/>
     <header v-if="hasNavBar">
       <nav-bar/>
     </header>

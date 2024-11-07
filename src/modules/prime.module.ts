@@ -24,7 +24,6 @@ export default function setPrimeComponent(app: App): void {
     app.component('Tag', Tag);
     app.component('ProgressSpinner', ProgressSpinner);
     app.component('CascadeSelect',CascadeSelect)
-    app.component('InputText', InputText);
     app.component('DataView', DataView);
     app.component('FloatLabel', FloatLabel);
     app.component('InputText', InputText);
