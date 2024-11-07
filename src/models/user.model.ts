@@ -7,7 +7,8 @@ export default class User {
     public phone?: string ,
     public id?: string,
     public auth_id? :string,
-    public created_at?: Date
+    public created_at?: Date,
+    public image_url?: string
   ) {}
 }
 

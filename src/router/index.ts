@@ -3,6 +3,7 @@ import Home from '../views/Home/home.vue'
 import Login from '../views/Login/login.vue'
 import Register from '@/views/Register/register.vue'
 import Account from '@/views/Account/account.vue'
+import Profile from '@/views/Profile/profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,14 @@ const router = createRouter({
         hasNavBar: true
       }
     },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta: {
+        hasNavBar: true
+      }
+    }
   ]
 })
 
