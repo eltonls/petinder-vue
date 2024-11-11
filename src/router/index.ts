@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home/home.vue'
 import Login from '../views/Login/login.vue'
 import Register from '@/views/Register/register.vue'
-import Account from '@/views/Account/account.vue'
 import Profile from '@/views/Profile/profile.vue'
 
 const router = createRouter({
@@ -30,14 +29,6 @@ const router = createRouter({
       component: Login,
       meta: {
         hasNavBar: false
-      }
-    },
-    {
-      path: '/account',
-      name: 'account',
-      component: Account,
-      meta: {
-        hasNavBar: true
       }
     },
     {
