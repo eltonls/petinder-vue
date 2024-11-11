@@ -1,5 +1,5 @@
 <template>
-<div class="w-[100vw] min-h-[65px] bg-filterBar-home flex flex-col md:flex-row">
+<div class="w-full min-h-[65px] bg-filterBar-home flex flex-col md:flex-row">
     <div class="gap-8 px-6 py-3 flex flex-row flex-wrap h-[65] w-fit">
         <Select v-model="selectedBreed" :options="breedOptions" placeholder="Selecione uma raça" @update:model-value="$emit('filterByBreed', selectedBreed)" class="w-52"></Select>
         <SelectButton v-model="selectedGender" :options="genderOptions" aria-labelledby="basic" @click="$emit('filterByGender', selectedGender)"/>

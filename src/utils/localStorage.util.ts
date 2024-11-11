@@ -12,7 +12,7 @@ class LocalStorageUtil<T> {
 
     return null;
   }
-  removeIten(key: string): void{
+  removeItem(key: string): void{
     localStorage.removeItem(key)
   }
 }
