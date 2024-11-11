@@ -5,15 +5,15 @@
     >
     <RouterLink to="/" >
       <button
-        class="items-center absolute top-0 left-0 flex text-2xl font-medium gap-3 text-orange-400 py-3 rounded px-10"
+        class="absolute top-0 left-0 flex text-2xl font-medium gap-3 text-secondary py-3 rounded px-10"
       >
-        <i class="pi pi-arrow-left" style="font-size: 1.3rem"></i>
-        <p>Voltar</p>
+        <i class="pi pi-arrow-left" style="font-size: 1rem"></i>
+        <p class="text-sm">Voltar</p>
       </button>
     </RouterLink>
       <div class="flex gap-2">
         <h1 class="font-bold tracking-wide mb-10 text-2xl">
-          <span class="text-orange-400">Pet</span>inder
+          <span class="text-secondary">Pet</span>inder
         </h1>
       </div>
       <h2 class="mb-10">Bem-vindo de volta!</h2>
@@ -24,6 +24,7 @@
               id="email"
               v-model="emailInput"
               :class="v$.emailInput.$error ?? '!border-red-300'"
+              class="w-full"
             />
             <label for="email">Email</label>
           </FloatLabel>
@@ -39,7 +40,7 @@
 
         <div>
           <FloatLabel class="mb-1">
-            <InputText id="password" type="password" v-model="passwordInput" />
+            <InputText id="password" type="password" v-model="passwordInput" class="w-full"/>
             <label for="password">Senha</label>
           </FloatLabel>
           <p
@@ -56,7 +57,7 @@
           <p>Quer ser lembrado por nós?</p>
           <ToggleButton
             v-model="rememberUser"
-            class="!text-orange-400"
+            class="!text-secondary"
             onLabel="Sim"
             offLabel="Não"
           />
@@ -67,13 +68,13 @@
         </span>
         <button
           type="submit"
-          class="bg-orange-400 px-10 py-3 rounded font-bold"
+          class="bg-secondary px-10 py-3 rounded font-bold text-white tracking-wider"
         >
           Login
         </button>
       </form>
     </div>
-    <div class="hidden lg:w-1/2 h-screen absolute right-0 bottom-0 bg-orange-400 lg:flex justify-center items-end">
+    <div class="hidden lg:w-1/2 h-screen absolute right-0 bottom-0 bg-secondary lg:flex justify-center items-end">
       <img
         src="@/assets/images/pug2.png"
         alt=""
