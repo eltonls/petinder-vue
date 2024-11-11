@@ -6,6 +6,13 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Maitree', 'sans-serif'],
+        display: ['Pacifico', 'display']
+      },
+      backgroundImage: {
+        'hero-pattern': "url('@/assets/images/bg.jpg')"
+      },
       keyframes: {
         slideInLeft: {
           '0%': { transform: 'translateX(-100%)', opacity: '0' },

@@ -4,7 +4,7 @@
     <Filter :pets="pets" @filterByGender="filterByGender" @filterByAge="filterByAge" @filterByBreed="filterByBreed" @filter="filter" @clearFilter="clearFilter()"></Filter>
     <DataView :class="isLoading? 'hidden': ''" :value="pets" data-key="pets" paginator :rows="size" :always-show-paginator="false" :total-records="total">
       <template #list="slotProps">
-        <div class="py-5 lg:px-24 text-center">
+        <div class="py-5 text-center lg:px-24">
           <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
             <PetCard :pet="pet" @response="showAdoptDialogIfLogged" />
           </div>
@@ -20,15 +20,15 @@
     <Dialog v-model:visible="isVisibleAdoptDialog" modal
       class="h-[50vh] !bg-white w-[480px] overflow-auto justify-between">
       <template #header>
-        <span class="text-lg font-semibold w-full h-full flex items-center justify-center">
+        <span class="flex items-center justify-center w-full h-full text-lg font-semibold">
           Confimar adoção de {{ adoptedPet.name }}
         </span>
       </template>
       <section class="flex flex-col justify-center">
       <div class="w-full h-56 mb-3">
-        <img :src="adoptedPet.image_url" alt="pet image" class="h-56 w-56 mx-auto rounded-md drop-shadow" >
+        <img :src="adoptedPet.image_url" alt="pet image" class="w-56 h-56 mx-auto rounded-md drop-shadow" >
       </div>
-      <div class="text-black text-justify">{{ adoptedPet.description }}</div>
+      <div class="text-justify text-black">{{ adoptedPet.description }}</div>
       </section>
       <template #footer>
         <div class="flex gap-4">

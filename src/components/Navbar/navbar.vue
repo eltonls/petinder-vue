@@ -1,9 +1,9 @@
 <template>
   <main>
     <nav
-      class="flex items-center justify-between flex-wrap bg-blue-950 p-4 flex-shrink-0"
+      class="flex flex-wrap items-center justify-between flex-shrink-0 p-4 bg-blue-950"
     >
-      <div class="font-bold m-4 animate-slide-in-left">
+      <div class="m-4 font-bold animate-slide-in-left">
         <RouterLink to="/">
           <span
             class="text-white !text-4xl animate-slide-in-left hover:text-[#FF8C00] duration-500"
@@ -11,7 +11,10 @@
           >
         </RouterLink>
       </div>
-      <div class="m-4 items-center animate-slide-in-right" v-if="isLogged">
+      <div class="flex flex-row items-center gap-4 m-4 animate-slide-in-right" v-if="isLogged">
+        <div class="w-12 h-12 rounded-full cursor-pointer" @click="goToProfile()" label="Perfil">
+          <img class="w-12 h-12 rounded-full" src="/src/assets/images/user.jpg" alt="Perfil do usuário">
+        </div>
         <Button
           icon="pi pi-sign-out"
           severity="warn"
@@ -23,7 +26,7 @@
           @click="logout()"
         />
       </div>
-      <div class="m-4 items-center animate-slide-in-right" v-else>
+      <div class="items-center m-4 animate-slide-in-right" v-else>
         <Button
           icon="pi pi-user"
           severity="warn"
@@ -69,6 +72,9 @@ export default {
         this.isLogged = true;
       }
     },
+    goToProfile(): void {
+      this.$router.push("/profile");
+    }
   },
   mounted() {
     this.hasUserLogged();
