@@ -1,33 +1,42 @@
 <template>
     <main class="m-4">
-        <Card class="min-w-60 !bg-white !w-[40vw] sm:!w-[20vw] max-w-80 !max-h-[446px] overflow-hidden rounded border-2">
-            <template #header>
-                <div class="w-full max-w-80 h-56 flex">
-                    <img :src="pet.image_url" alt="pet image" class="bg-cover h-56 w-full">
+        <section
+            class="w-32 h-48 sm:w-52 sm:h-72 md:w-[290px] md:h-[385px] overflow-hidden rounded-xl border-2 relative cursor-pointer"
+            @mouseover="showDetail(true)" @mouseleave="showDetail(false)" @click="sendPet()">
+            <div class="w-full h-full absolute top-0 left-0">
+                <img :src="pet.image_url" alt="pet image" class="w-full h-full object-cover">
+            </div>
+            <div class="bg-black opacity-50 absolute bottom-0 w-full"
+                :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-200 ease-linear']" />
+            <div class="absolute bg-transparent bottom-0 w-full px-2 py-4 text-white"
+                :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-300 ease-int-out']">
+                <div :class="isVisible ? 'flex-col sm:flex-row' : 'sm:flex'"
+                    class="gap-2 flex items-center sm:max-h-8 mb-1.5">
+                    <Tag class="!bg-orange-600 w-fit max-w-34 !text-white truncate md:!line-clamp-1 px-1"
+                        :value="pet.breed" rounded>
+                        <v-icon v-if="isMobile()" :name="setIconBreed(pet.breed!)"></v-icon>
+                    </Tag>
+                    <Tag class=" !bg-orange-600 w-fit !text-white !truncate px-1" :value="pet.gender" rounded>
+                        <v-icon v-if="isMobile()" :name="setIconGender(pet.gender!)"></v-icon>
+                    </Tag>
+                    <Tag class="!bg-orange-600 w-fit !text-white !truncate px-1" :value="ageStatus" rounded>
+                        <v-icon v-if="isMobile()" :name="setIconAge(ageStatus)" ></v-icon>
+                    </Tag>
                 </div>
-            </template>
-            <template #title>
-                <span class="!font-bold line-clamp-1 text-start text-black">{{ pet.name }}</span>
-            </template>
-            <template #subtitle>
-                <div class="gap-2 flex max-h-8">
-                    <Tag class="!bg-blue-600 max-w-34 !text-white !line-clamp-1 px-2" :value="pet.breed" rounded />
-                    <Tag class="!bg-blue-600 !text-white px-2" :value="pet.gender" rounded />
-                    <Tag class="!bg-blue-600 !text-white px-2" :value="ageStatus" rounded />
+                <div class="w-full">
+                    <h2 class="w-full text-start font-bold text-lg"
+                        :class="[isVisible ? 'line-clamp-2' : 'line-clamp-1']">{{ pet.name }}</h2>
+                    <p class="text-justify h-auto my-1.5 hidden md:flex"
+                        :class="[isVisible ? 'text-ellipsis sm:flex' : 'truncate', 'transition-all duration-200 ease-linear ']">
+                        {{ pet.description }}</p>
                 </div>
-            </template>
-            <template #content>
-                <p class="hidden xl:flex text-justify my-2 truncate text-black">{{ pet.description }}</p>
-            </template>
-            <template #footer>
-                <Button label="Quero adotar" @click="sendPet()" class="!drop-shadow-lg w-full !bg-orange-400 hover:!bg-white hover:!text-orange-400 !border-orange-400 active:scale-95 duration-200" />
-            </template>
-        </Card>
+            </div>
+        </section>
     </main>
 </template>
 
 <script lang="ts">
-import Pet from '@/models/pet.model';
+import Pet, { Breed, GenderPet } from '@/models/pet.model';
 import type { PropType } from 'vue';
 
 export default {
@@ -38,9 +47,14 @@ export default {
             required: true
         }
     },
+    data() {
+        return {
+            isVisible: false
+        }
+    },
     methods: {
         formatAge(age: number): string {
-            let ageStatus = '';
+            let ageStatus: string;
             if (age <= 3) {
                 ageStatus = 'Jovem';
             } else if (age <= 6) {
@@ -52,6 +66,73 @@ export default {
         },
         sendPet(): void {
             this.$emit("response", this.pet);
+        },
+        showDetail(state: boolean) {
+            this.isVisible = state;
+        },
+        isMobile(): boolean {
+            const width = window.innerWidth;
+            return width < 640 ?  true : false;
+        },
+        setIconAge(age: string): string {
+            switch (age) {
+                case 'Idoso': {
+                    return 'md-elderly';
+                }
+                case 'Adulto': {
+                    return 'md-man';
+                }
+                default: {
+                    return 'fa-baby';
+                }
+            }
+        },
+        setIconGender(gender: GenderPet): string {
+            switch (gender) {
+                case GenderPet.Male: {
+                    return 'gi-male';
+                }
+                default: {
+                    return 'gi-female';
+                }
+            }
+        },
+        setIconBreed(breed: Breed): string {
+            switch (breed) {
+                case Breed.Arachnids: {
+                    return 'fa-spider';
+                }
+                case Breed.Birds: {
+                    return 'fa-crow';
+                }
+                case Breed.Cats: {
+                    return 'fa-cat';
+                }
+                case Breed.Dogs: {
+                    return 'co-dog';
+                }
+                case Breed.Fish: {
+                    return 'fa-fish';
+                }
+                case Breed.Frogs: {
+                    return 'fa-frog';
+                }
+                case Breed.Insects: {
+                    return 'fa-bug';
+                }
+                case Breed.Lizards: {
+                    return 'gi-gecko';
+                }
+                case Breed.Rodents: {
+                    return 'md-pestcontrolrodent';
+                }
+                case Breed.Turtles: {
+                    return 'gi-turtle-shell';
+                }
+                default: {
+                    return 'co-animal';
+                }
+            }
         }
     },
     computed: {
@@ -61,9 +142,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-.p-card > .p-card-header {
-    height: 50px !important;
-}
-</style>

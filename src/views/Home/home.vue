@@ -19,7 +19,7 @@
       :total-records="total"
     >
       <template #list="slotProps">
-        <div class="py-5 text-center lg:px-24">
+        <div class="py-5 lg:px-16 text-center">
           <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
             <PetCard :pet="pet" @response="showAdoptDialogIfLogged" />
           </div>
@@ -48,7 +48,7 @@
       </template>
       <section class="flex flex-col justify-center">
       <div class="w-full h-56 mb-3">
-        <img :src="adoptedPet.image_url" alt="pet image" class="w-56 h-56 mx-auto rounded-md drop-shadow" >
+        <img :src="adoptedPet.image_url" alt="pet image" class="w-auto h-56 mx-auto rounded-md drop-shadow" >
       </div>
       <div class="text-justify text-black">{{ adoptedPet.description }}</div>
       </section>
