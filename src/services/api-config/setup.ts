@@ -5,6 +5,6 @@ const url = import.meta.env.VITE_SUPABASE_URL;
 
 const supabase = createClient(url, key)
 
-console.log(supabase);
+//console.log(supabase);
 
 export default supabase;
