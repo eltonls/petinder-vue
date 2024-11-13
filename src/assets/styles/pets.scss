@@ -1,0 +1,40 @@
+.custom-table {
+  .p-dataview-content {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-radius: 6px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    min-height: calc(100vh - 224px);
+  }
+  .p-paginator {
+    background-color: rgba(255, 255, 255, 0.6);
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+    padding-top: 12px;
+    padding-bottom: 16px;
+  }
+  .p-dataview-paginator-bottom {
+    border: none;
+  }
+}
+.btn-filter {
+  .p-button-label {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+  }
+}
+.custom-selectbutton {
+  .p-togglebutton-label {
+    color: black;
+    font-size: 16px;
+    font-weight: 400;
+  }
+}
+.custom-select {
+  .p-select-label.p-placeholder {
+    color: black !important;
+  }
+  .p-icon {
+    color: black;
+  }
+}

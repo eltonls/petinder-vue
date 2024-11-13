@@ -1,7 +1,7 @@
 <template>
     <main class="m-4">
         <section
-            class="w-32 h-48 sm:w-52 sm:h-72 md:w-[290px] md:h-[385px] overflow-hidden rounded-xl border-2 relative cursor-pointer"
+            class="w-32 h-48 sm:w-52 sm:h-72 md:w-[290px] md:h-[385px] overflow-hidden rounded-xl shadow border border-gray-400 relative cursor-pointer"
             @mouseover="showDetail(true)" @mouseleave="showDetail(false)" @click="sendPet()">
             <div class="absolute top-0 left-0 w-full h-full">
                 <img :src="pet.image_url" alt="pet image" class="object-cover w-full h-full">
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import Pet, { Breed, GenderPet, ageRange } from '@/models/pet.model';
+import Pet, { Breed, GenderPet, AgeRange } from '@/models/pet.model';
 import type { PropType } from 'vue';
 
 export default {
@@ -63,7 +63,7 @@ export default {
             const width = window.innerWidth;
             return width < 640 ?  true : false;
         },
-        setIconAge(age: ageRange): string {
+        setIconAge(age: AgeRange): string {
             switch (age) {
                 case 'Idoso': {
                     return 'md-elderly';
