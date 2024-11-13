@@ -2,7 +2,7 @@ export default class Pet{
     constructor(
         public name?: string,
         public breed?: Breed,
-        public age?: number,
+        public age?: AgeRange,
         public description?: string ,
         public gender?: GenderPet,
         public image_url?: string,
