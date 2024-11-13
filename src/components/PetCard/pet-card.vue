@@ -3,12 +3,12 @@
         <section
             class="w-32 h-48 sm:w-52 sm:h-72 md:w-[290px] md:h-[385px] overflow-hidden rounded-xl border-2 relative cursor-pointer"
             @mouseover="showDetail(true)" @mouseleave="showDetail(false)" @click="sendPet()">
-            <div class="w-full h-full absolute top-0 left-0">
-                <img :src="pet.image_url" alt="pet image" class="w-full h-full object-cover">
+            <div class="absolute top-0 left-0 w-full h-full">
+                <img :src="pet.image_url" alt="pet image" class="object-cover w-full h-full">
             </div>
-            <div class="bg-black opacity-50 absolute bottom-0 w-full"
+            <div class="absolute bottom-0 w-full bg-black opacity-50"
                 :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-200 ease-linear']" />
-            <div class="absolute bg-transparent bottom-0 w-full px-2 py-4 text-white"
+            <div class="absolute bottom-0 w-full px-2 py-4 text-white bg-transparent"
                 :class="[isVisible ? 'h-48 sm:h-72 md:h-[385px]' : 'h-20 sm:h-28 md:h-[154px]', 'transition-all duration-300 ease-int-out']">
                 <div :class="isVisible ? 'flex-col sm:flex-row' : 'sm:flex'"
                     class="gap-2 flex items-center sm:max-h-8 mb-1.5">
@@ -19,12 +19,12 @@
                     <Tag class=" !bg-orange-600 w-fit !text-white !truncate px-1" :value="pet.gender" rounded>
                         <v-icon v-if="isMobile()" :name="setIconGender(pet.gender!)"></v-icon>
                     </Tag>
-                    <Tag class="!bg-orange-600 w-fit !text-white !truncate px-1" :value="ageStatus" rounded>
-                        <v-icon v-if="isMobile()" :name="setIconAge(ageStatus)" ></v-icon>
+                    <Tag class="!bg-orange-600 w-fit !text-white !truncate px-1" :value="pet.age" rounded>
+                        <v-icon v-if="isMobile()" :name="setIconAge(pet.age!)" ></v-icon>
                     </Tag>
                 </div>
                 <div class="w-full">
-                    <h2 class="w-full text-start font-bold text-lg"
+                    <h2 class="w-full text-lg font-bold text-start"
                         :class="[isVisible ? 'line-clamp-2' : 'line-clamp-1']">{{ pet.name }}</h2>
                     <p class="text-justify h-auto my-1.5 hidden md:flex"
                         :class="[isVisible ? 'text-ellipsis sm:flex' : 'truncate', 'transition-all duration-200 ease-linear ']">
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts">
-import Pet, { Breed, GenderPet } from '@/models/pet.model';
+import Pet, { Breed, GenderPet, ageRange } from '@/models/pet.model';
 import type { PropType } from 'vue';
 
 export default {
@@ -53,17 +53,6 @@ export default {
         }
     },
     methods: {
-        formatAge(age: number): string {
-            let ageStatus: string;
-            if (age <= 3) {
-                ageStatus = 'Jovem';
-            } else if (age <= 6) {
-                ageStatus = 'Adulto';
-            } else {
-                ageStatus = 'Idoso';
-            }
-            return ageStatus;
-        },
         sendPet(): void {
             this.$emit("response", this.pet);
         },
@@ -74,7 +63,7 @@ export default {
             const width = window.innerWidth;
             return width < 640 ?  true : false;
         },
-        setIconAge(age: string): string {
+        setIconAge(age: ageRange): string {
             switch (age) {
                 case 'Idoso': {
                     return 'md-elderly';
@@ -135,10 +124,5 @@ export default {
             }
         }
     },
-    computed: {
-        ageStatus(): string {
-            return this.formatAge(this.pet.age!);
-        },
-    }
 }
 </script>

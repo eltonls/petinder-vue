@@ -16,13 +16,7 @@ class PetRest {
     }
 
     if (ageRange) {
-      if (ageRange == AgeRange.Young) {
-        query = query.gte("age", [0]).lte("age", [3]);
-      } else if (ageRange == AgeRange.Adult) {
-        query = query.gte("age", [4]).lte("age", [6]);
-      } else {
-        query = query.gte("age", [7]).lte("age", [100]);
-      }
+      query = query.eq("age", ageRange);
     }
 
     if (breed) {
