@@ -1,4 +1,6 @@
 import './style.css'
+import './assets/main.css'
+import Ripple from 'primevue/ripple';
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
@@ -10,17 +12,22 @@ import setComponent from './modules/component.module';
 import 'primeicons/primeicons.css'
 import setIcons from './modules/icons.module';
 
+
 const app = createApp(App);
 
 app.use(PrimeVue, {
     theme: {
-        preset: Aura
+        preset: Aura,
+        options: {
+          darkModeSelector: false || 'none'
+        }
     }
 });
 
 setPrimeComponent(app);
 setComponent(app);
 setIcons(app);
+app.directive('ripple', Ripple);
 
 app.use(ToastService);
 app.use(router);

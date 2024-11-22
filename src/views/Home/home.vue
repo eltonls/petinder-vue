@@ -215,7 +215,7 @@ export default {
   },
   mounted() {
     this.getPets();
-    this.getUserById()
+    this.getUserById();
   },
 };
 </script>

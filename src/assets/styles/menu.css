@@ -1,0 +1,158 @@
+
+.p-menubar-item-content {
+    position: relative;
+    background-color: none !important;
+    color: white !important;
+    transition: all .5s;
+  } 
+  
+  .p-menubar-mobile-active {
+    background: #000;
+  }
+  
+  .p-menubar-mobile .p-menubar-button {
+    color: white !important;
+  }
+  
+  .p-menubar-mobile .p-menubar-button:hover {
+    background: none !important;
+    color: white !important;
+  }
+  
+  .p-menubar {
+    position: relative;
+  }
+  
+  .p-menubar-item-active > .p-menubar-item-content {
+    background-color: #7C7EF6 !important;
+    color: white !important;
+  }
+  
+  .p-menubar .p-menubar-item .p-focus .p-menubar-item-content {
+    background-color: #7C7EF6 !important;
+    color: white !important
+  }
+  
+  .p-menubar-mobile .p-menubar-item-link > span {
+    display: flex !important;
+  }
+  
+  .p-menubar-mobile .p-menubar-item-link {
+    display: flex;
+    justify-content: justify-between;
+  }
+  
+  .p-menubar-item .p-focus > .p-menubar-item-content > a {
+    background-color: none !important;
+  }
+  
+  .p-menubar .p-menubar-item-link > span {
+    display: none;
+  }
+  
+  .p-menubar .p-menubar-submenu .p-menubar-item-link > span {
+    display: block;
+    color: white;
+  }
+  
+  .p-menubar-mobile-active .p-menubar-root-list {
+    display: flex; 
+  }
+  
+  .p-menubar-mobile .p-menubar-root-list {
+    width: fit-content !important;
+    position: absolute !important;
+    right: 0;
+    left: auto !important;
+    color: black !important;
+    background: #666BE1 !important;
+  }
+  
+  .p-menubar-item-active > .p-menubar-item-content {
+    background-color: #7C7EF6 !important;
+    color: white !important;
+  }
+  
+  .p-menubar-item-active > .p-menubar-item {
+    background-color: #7C7EF6 !important;
+    color: white !important;
+  }
+  
+  .p-menubar-item-focus-background {
+    background: none !important;
+  }
+  
+  .p-menubar-item-active > .p-menubar-item-content .p-focus{
+    background: transparent;
+  }
+  
+  .p-menubar-item-active > .p-menubar-submenu {
+    color: white !important;
+  }
+  
+  .p-menubar-item-active > .p-menubar-submenu > .p-menubar-item-content {
+    background: #7C7EF6 !important;
+    color: white !important;
+  }
+  .p-menubar-item-active > .p-menubar-submenu .p-menubar-item-content:hover {
+    background-color: #7C7EF6 !important;
+    color: white !important;
+  }
+  
+  .p-menu-submenu-list {
+    opacity: .8;
+  }
+  
+  .p-menubar-submenu .p-menubar-item-content {
+    color: black !important;
+  }
+  
+  .p-menubar-item-content:hover {
+    background: transparent !important;
+    color: #f97316 !important;
+  }
+  
+  .p-menubar-item-content:active {
+    background: transparent !important;
+  }
+  
+  .p-menubar-submenu {
+    background-color: #666BE1 !important;
+    color: #f97316 !important;
+    border: none !important;
+    outline: none;
+    box-shadow: 4px 4px 4px black;
+  
+    .p-active {
+      background-color: transparent !important;
+    }
+  }
+  
+  .p-menu-submenu {
+    font-weight: bold;
+  
+    .p-focus:not(:hover) {
+      background-color: transparent !important;
+    }
+  
+    .p-focus {
+      background-color: transparent !important;
+    }
+  
+    .p-menubar-item-content:hover {
+      background: transparent !important;
+      color: #f97316 !important;
+    }
+  }
+  
+  .p-active {
+    background-color: transparent !important;
+  }
+  
+  .p-menubar .p-focus {
+    background-color: none !important;
+  }
+  
+  .p-menubar-item.p-focus > .p-menubar-item-content {
+    background-color: transparent !important;
+  }
