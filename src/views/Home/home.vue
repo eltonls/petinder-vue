@@ -1,69 +1,48 @@
 <template>
-  <main>
+  <main class="relative overflow-hidden bg-[url('@/assets/images/bg.png')] bg-contain">
     <Loader v-if="isLoading" />
-    <Filter
-      :pets="pets"
-      @filterByGender="filterByGender"
-      @filterByAge="filterByAge"
-      @filterByBreed="filterByBreed"
-      @filter="filter"
-      @clearFilter="clearFilter()"
-    ></Filter>
-    <DataView
-      :class="isLoading ? 'hidden' : ''"
-      :value="pets"
-      data-key="pets"
-      paginator
-      :rows="size"
-      :always-show-paginator="false"
-      :total-records="total"
-    >
-      <template #list="slotProps">
-        <div class="py-5 lg:px-16 text-center">
-          <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex">
-            <PetCard :pet="pet" @response="showAdoptDialogIfLogged" />
+    <section :class="isLoading ? 'hidden' : ''" class="px-2 lg:px-32 bg-black bg-opacity-50 relative min-h-full ">
+      <Filter :pets="pets" @filterByGender="filterByGender" @filterByAge="filterByAge" @filterByBreed="filterByBreed"
+        @filter="filter" @clearFilter="clearFilter()"></Filter>
+      <DataView :value="pets" data-key="pets" paginator class="custom-table"
+        :rows="size" :always-show-paginator="false" :total-records="total">
+        <template #list="slotProps">
+          <div class="py-2 text-center ">
+            <div v-for="pet in slotProps.items" :key="pet.id" class="inline-flex " >
+              <PetCard :pet="pet" @response="showAdoptDialogIfLogged" class=""/>
+            </div>
           </div>
-        </div>
-      </template>
-      <template #empty>
-        <div
-          class="flex flex-col items-center justify-center p-8 m-5 mx-auto rounded-full w-80"
-        >
-          <img src="@/assets/images/empty.png" alt="" class="w-60 h-60" />
-          <h4 class="text-xl font-bold text-gray-400">
-            Ah... não tem pet aqui
-          </h4>
-        </div>
-      </template>
-    </DataView>
-    <Dialog
-      v-model:visible="isVisibleAdoptDialog"
-      modal
-      class="h-[50vh] !bg-white w-[480px] overflow-auto justify-between"
-    >
+        </template>
+        <template #empty>
+          <div class="flex flex-col items-center justify-center p-8 m-5 mx-auto rounded-full w-80">
+            <img src="@/assets/images/empty.png" alt="" class="w-60 h-60" />
+            <h4 class="text-xl font-bold text-gray-400">
+              Ah... não tem pet aqui
+            </h4>
+          </div>
+        </template>
+      </DataView>
+    </section>
+
+    <Dialog v-model:visible="isVisibleAdoptDialog" modal
+      class="h-[50vh] !bg-white w-[480px] overflow-auto justify-between">
       <template #header>
         <span class="flex items-center justify-center w-full h-full text-lg font-semibold">
           Confimar adoção de {{ adoptedPet.name }}
         </span>
       </template>
       <section class="flex flex-col justify-center">
-      <div class="w-full h-56 mb-3">
-        <img :src="adoptedPet.image_url" alt="pet image" class="w-auto h-56 mx-auto rounded-md drop-shadow" >
-      </div>
-      <div class="text-justify text-black">{{ adoptedPet.description }}</div>
+        <div class="w-full h-56 mb-3">
+          <img :src="adoptedPet.image_url" alt="pet image" class="w-auto h-56 mx-auto rounded-md drop-shadow">
+        </div>
+        <div class="text-justify text-black">{{ adoptedPet.description }}</div>
       </section>
       <template #footer>
         <div class="flex gap-4">
-          <Button
-            label="Cancelar"
-            @click="setStateDialog(false)"
-            class="!bg-white !border-orange-400 !text-orange-400 hover:!bg-orange-50"
-          />
-          <Button
-            label="Confimar"
-            @click="adoptPet(adoptedPet)"
-            class="!bg-orange-400 !border-orange-400 hover:!bg-orange-500"
-          />
+          <Button label="Cancelar" @click="setStateDialog(false)"
+            class="!bg-white !border-orange-400 !text-orange-400 hover:!bg-orange-50" />
+          <Button label="Confimar" @click="adoptPet(adoptedPet)"
+            class="!bg-orange-400 !border-orange-400 hover:!bg-orange-500" />
         </div>
       </template>
     </Dialog>
@@ -138,25 +117,25 @@ export default {
       const user = this.localStorage.getItem("user") as User;
       this.adoption.pet_id = pet.id as number;
       this.adoption.user_id = user.id as string;
-      if(!this.completeUserRegistration){
+      if (!this.completeUserRegistration) {
         this.$router.push('/account')
       }
-      else{
+      else {
 
         this.getAdoptionById(this.adoption.user_id, this.adoption.pet_id);
       }
       this.setStateDialog(false);
     },
-    getUserById():void{
-      if(this.isLogged()){
+    getUserById(): void {
+      if (this.isLogged()) {
         this.service.user.pipe(take(1)).subscribe({
-          next:(response)=>{
-            if(response.data.length===1){
-              this.completeUserRegistration = true       
-            }else{
+          next: (response) => {
+            if (response.data.length === 1) {
+              this.completeUserRegistration = true
+            } else {
               this.completeUserRegistration = false
-              
-            }          
+
+            }
           }
         })
         this.service.getUserById(this.userId)
@@ -208,7 +187,7 @@ export default {
     localStorage() {
       return new LocalStorageUtil();
     },
-    userId():string{
+    userId(): string {
       const user = this.localStorage.getItem("user") as User;
       return user.id as string
     }
