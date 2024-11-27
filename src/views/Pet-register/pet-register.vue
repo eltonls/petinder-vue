@@ -15,7 +15,13 @@
                         :maxlength="30" 
                         class="w-[1030px] mb-6"
                         v-model="pet.name"
-                    />                
+                    />   
+                    <p :class="v$.pet.name.$error
+                        ? 'opacity-100'
+                        : '-translate-y-6 opacity-0 invisible'
+                        " class="text-xs text-red-400 transition-all">
+                        Nome inválido.
+                    </p>             
                 </fieldset>
                 <section class="card flex flex-wrap gap-4 w-[1030px] justify-between">
                     <fieldset>
@@ -27,7 +33,14 @@
                             :options="breedPet" 
                             optionLabel="name" 
                             placeholder="Selecione o tipo de pet" 
-                            class="w-[423px]" />                    
+                            class="w-[423px]" 
+                        />
+                        <p :class="v$.pet.name.$error
+                            ? 'opacity-100'
+                            : '-translate-y-6 opacity-0 invisible'
+                            " class="text-xs text-red-400 transition-all">
+                            Selecione um tipo de pet.
+                        </p>                    
                     </fieldset>
                     <fieldset>
                         <label for="genre" class="block mb-2">
@@ -36,11 +49,17 @@
                         <Select 
                             id="genre" 
                             v-model="pet.gender"
-                            :options="genrePet" 
-                            option-label="genre" 
+                            :options="genderPet" 
+                            option-label="gender" 
                             class="w-[300px]"
                             placeholder="Selecione o gênero" 
                         />
+                        <p :class="v$.pet.name.$error
+                            ? 'opacity-100'
+                            : '-translate-y-6 opacity-0 invisible'
+                            " class="text-xs text-red-400 transition-all">
+                            Selecione um gênero.
+                        </p>
                     </fieldset>
                     <fieldset>
                         <label for="age" class="block mb-2">
@@ -54,6 +73,12 @@
                             class="w-[250px]"
                             placeholder="Selecione a idade" 
                         />
+                        <p :class="v$.pet.name.$error
+                            ? 'opacity-100'
+                            : '-translate-y-6 opacity-0 invisible'
+                            " class="text-xs text-red-400 transition-all">
+                            Selecione uma idade.
+                        </p>
                     </fieldset>
                 </section>
                 <fieldset class="mt-6">
@@ -66,31 +91,16 @@
                         rows="5"
                         cols="30"
                         style="resize: none;"
-                    />          
+                    /> 
+                    <p :class="v$.pet.name.$error
+                            ? 'opacity-100'
+                            : '-translate-y-6 opacity-0 invisible'
+                            " class="text-xs text-red-400 transition-all">
+                            Digite uma descrição válida.
+                        </p>         
                 </fieldset>
                 <div class="flex flex-col items-start w-[1030px] mt-5">
-                    <label for="inputAddImage">
-                        <span>Anexar imagem</span>
-                        <i class="pi pi-upload"></i>
-                    </label>
-                    <input 
-                        id="inputAddImage" 
-                        type="file" 
-                        class=""
-                        accept="image/*, .png, .jpg, .jpeg" 
-                        @change="validateImage"
-                    />
-                    <!-- <FileUpload 
-                        id="inputAddImage"
-                        name="fileName"
-                        :max-file-size="5000000"
-                        mode="basic" 
-                        accept="image/*, .png, .jpg, .jpeg" 
-                        choose-label="Anexar imagem" 
-                        choose-icon="pi pi-upload" 
-                        class="!bg-transparent !text-black !border-none !p-0"
-                        @upload="upload"
-                    />     -->
+                    <InputImage @onSetImage="setPetImage" @onResetImage="resetPetImage" :imageSelected="pet.image_url"/>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-300 mb-5" id="inputAddImage">PNG, JPG ou JPEG (MAX. 1MB).</p>
                 </div>
                 <div class="flex items-center w-[1030px]">
@@ -98,7 +108,7 @@
                         @click="backToPreviousPage()"
                         class="w-44 me-4 !bg-white hover:!bg-slate-300 hover:!text-white !border-gray-300 active:scale-95 duration-200 !text-black !rounded-none">Cancelar</Button>
                     <Button @click="" type="submit" class="w-44 !bg-orange-400 hover:!bg-white hover:!text-orange-400 !border-orange-400 active:scale-95 duration-200 !rounded-none">Enviar</Button>
-                    <Button @click="getUserId()">AQUIIIIII</Button>
+                    <Button @click="console.log()">AQUIIIII</Button>
                 </div>
             </section>
         </form>
@@ -107,16 +117,31 @@
 <script lang="ts">
 import router from '@/router';
 import { defineComponent } from 'vue';
-import { HomeService } from '../Home/home.service';
 import Pet, { AgeRange, Breed, GenderPet } from '@/models/pet.model';
-import supabase from '@/services/api-config/setup';
-import { v4 as uuidv4 } from "uuid";
-import LocalStorageUtil from '@/utils/localStorage.util';
+import { minLength, required } from '@vuelidate/validators';
+import { validateName } from '@/utils/validators.util';
+import { PetRegisterService } from './pet-register.service';
+import useVuelidate from '@vuelidate/core';
 
 export default defineComponent ({
+    validations() {
+        return {
+            pet: {
+                name: {required, minLength: minLength(3), validateName},
+                breed: {required},
+                age: {required},
+                description: {required, minLength: minLength(5)},
+                gender: {required},
+                image_url: {required}
+            }
+        }
+    },
     data() {
         return {
-            imagePet: FileList || null,
+            nameImage: '',
+            image: {} as File,
+            newImage: false,
+            v$: useVuelidate(),
             breedPet: [
                 {name: Breed.Dogs},
                 {name: Breed.Cats},
@@ -130,9 +155,9 @@ export default defineComponent ({
                 {name: Breed.Arachnids},
                 {name: Breed.Others}
             ],
-            genrePet: [
-                {genre: GenderPet.Male},
-                {genre: GenderPet.Female}
+            genderPet: [
+                {gender: GenderPet.Male},
+                {gender: GenderPet.Female}
             ],
             agePet: [
                 {age: AgeRange.Young},
@@ -146,51 +171,40 @@ export default defineComponent ({
                 description: '',
                 gender: GenderPet,
                 image_url: '',
-                // create_at: new Date(),
-                user_id: ''
             } as unknown as Pet
         }
     },
     methods: {
+        //Manda o objeto pet para o Supabasse
         registerPet(): void {
-            this.service.pets.pipe().subscribe({
+            this.service.pet.pipe().subscribe({
                 next: (response) => {
                     if(response.error === null) {
-                        this.$toast.add({ severity: 'info', summary: 'Sucesso!', detail: 'Pet cadastrado com sucesso.', life: 3000 });
+                        this.$toast.add({ severity: 'info', summary: 'Sucesso!', detail: 'Pet cadastrado com sucesso.', life: 3000 });                        
+                    } else {
+                        this.$toast.add({ severity: 'error', summary: 'Erro!', detail: 'Não foi possível cadastrar o pet.', life: 3000 });                        
                     }
                 }
             });
-            this.service.updatePet(this.pet);
-            //UPLOAD DA IMAGEM.
+            // this.acessObjectPet(this.pet);
+            this.service.registerPet(this.pet);
         },
         submitFormPet(): void {
+            this.acessObjectPet(this.pet);
+            //upload da imagem
+            //pegar o link da img e colocar no objeto pet
             this.registerPet();
-            this.getUserId();
-            // this.uploadImage(this.pet.image_url, 'pet-image')
         },
         backToPreviousPage():void {
             router.go(-1);
         },
-        getUrlPublic(fileId: string, storage: string): any {
-            const publicURL = supabase
-                .storage
-                .from(storage)
-                .getPublicUrl(fileId)
-
-            return publicURL;
+        //Pega a URL da imagem no Supabase
+        getUrlPublic(): string {
+            return this.service.getImageURL(this.nameImage);
         },
-        uploadImage(file: File, storage: string): any {
-            const fileId = uuidv4() as string;
-            supabase
-                .storage
-                .from(storage)
-                .upload(fileId, file, {
-                    cacheControl: '3600',
-                    upsert: false
-                })
-
-            const publicURL = this.getUrlPublic(fileId, storage);
-            return publicURL;
+        //Sobe a imagem para o bucket
+        uploadImage(image: File): void {
+            this.service.addImage(image, this.nameImage);
         },
         checkSizeImage(image: File): boolean {
             if(image !== null) {
@@ -209,26 +223,32 @@ export default defineComponent ({
             return (imageType === "png" || imageType === "jpg" || imageType === "jpeg");
         },
         validateImage(event: Event): boolean {
-            const image = (event?.target as HTMLInputElement).files;
+            const image = (event?.target as HTMLInputElement).files || null;
             if(image){
-                // this.imagePet = image;
+                this.nameImage = image[0].name;
                 return (this.checkSizeImage(image[0]) && this.checkTypeImage(image[0]));
             } else {
                 return false;
             }
         },
-        getUserId(): void {
-            const user: any = this.localStorage.getItem("user");
-            this.pet.user_id = user.id;
-            console.log('User ID: ', this.pet);
+        acessObjectPet(petRecived: any): void {
+            this.pet.age = petRecived.age.age;
+            this.pet.gender = petRecived.gender.gender;
+            this.pet.breed = petRecived.breed.name;
+        },
+        setPetImage(image: File): void {
+            this.image = image;
+            this.nameImage = image.name;
+            this.pet.image_url = this.getUrlPublic();
+            this.newImage = true;
+        },
+        resetPetImage(): void {
+            this.pet.image_url = '';
         }
     },
     computed: {
-        service(): HomeService {
-            return new HomeService;
-        },
-        localStorage() {
-            return new LocalStorageUtil();
+        service(): PetRegisterService {
+            return new PetRegisterService;
         },
     }
 })
