@@ -3,7 +3,7 @@
         :closable="false">
         <template #header>
             <span class="flex items-center justify-center w-full h-full text-lg font-semibold">
-                Confimar adoção de {{ pet.name }}
+                {{ pageType === 'home' ? 'Confimar adoção de ' + pet.name : pet.name }}
             </span>
         </template>
         <section class="flex flex-col justify-center">
@@ -20,7 +20,7 @@
                     class="!bg-orange-400 !border-orange-400 hover:!bg-orange-500" />
                 <Button v-if="pageType === 'profile'" label="Editar" @click="redirectToPetUpdate()"
                     class="!bg-[#7C7EF6F2] !border-[#7C7EF6F2]" />
-                <Button v-if="pageType === 'profile'" label="Deletar" @click="deletePet()"
+                <Button v-if="pageType === 'profile'" label="Deletar" @click="deletePet(pet)"
                     class="!bg-red-600 !border-red-600 " />
             </div>
         </template>
@@ -29,7 +29,6 @@
 
 <script lang="ts">
 import type Pet from '@/models/pet.model';
-import { HomeService } from '@/views/Home/home.service';
 import type { PropType } from 'vue';
 
 export default {
@@ -54,23 +53,15 @@ export default {
         adoptPet(pet: Pet) {
             this.$emit("adoptPet", pet);
         },
-        deletePet(): void {
-            this.service.pets.subscribe({
-                next: () => {
-                    this.service.deletePet(this.pet);
-                    this.setStateDialog()
-                }
-            })
-            this.service.deleteAdoption(this.pet.id!)
+        deletePet(pet: Pet): void {
+            this.$emit("deletePet", pet);
         },
         redirectToPetUpdate(): void {
             this.$router.push(`/pet-update/${this.pet.id}`);
+        },
+        isPetByUser() {
+            // return
         }
     },
-    computed: {
-        service(): HomeService {
-            return new HomeService();
-        }
-    }
 }
 </script>

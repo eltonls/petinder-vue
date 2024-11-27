@@ -74,13 +74,15 @@
                 <TabPanels>
                     <TabPanel v-for="(tab, i) in tabs" :key="i" :value="tab.value" class="text-center">
                         <div v-for="pet in pets" class="inline-flex">
-                            <PetCard :pet="pet" :pageType="'profile'" @response="(value: any) => profilePet = value" @click="setStateDialog(true)"/>
+                            <PetCard :pet="pet" :pageType="'profile'" @response="(value: any) => profilePet = value"
+                                @click="setStateDialog(true)" />
                         </div>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
         </div>
-        <DetailDialog :isVisible="isVisibleDetailDialog" :pet="profilePet" :pageType="'profile'" @closeDialog="setStateDialog"/>
+        <DetailDialog :isVisible="isVisibleDetailDialog" :pet="profilePet" :pageType="'profile'"
+            @closeDialog="setStateDialog" @deletePet="deletePet" />
     </main>
 </template>
 <script lang="ts">
@@ -199,7 +201,6 @@ export default defineComponent({
             this.userEmail = user.email;
             return user?.id;
         },
-
         toggleGetTab(value: string) {
             const userId = (this.localStorage.getItem('user') as User).id as string
             if (value === '0') {
@@ -224,10 +225,15 @@ export default defineComponent({
             });
             this.petService.getAdoptedPetsByOnwer(id);
         },
-
         setStateDialog(state: boolean): void {
             this.isVisibleDetailDialog = state;
         },
+        deletePet(pet: Pet): void {
+            this.petService.deleteAdoption(pet.id!);
+            this.petService.deletePet(pet);
+            this.pets.splice(this.pets.indexOf(pet), 1)
+            this.setStateDialog(false);
+        }
     },
     computed: {
         service(): ProfileService {
