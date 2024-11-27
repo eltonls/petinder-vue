@@ -5,7 +5,6 @@ import AdoptionRest from "@/services/rest/adoption.rest";
 import PetRest from "@/services/rest/pet.rest";
 import UserRest from "@/services/rest/user.rest";
 import { Observable, Subject, take } from "rxjs";
-
 export class HomeService {
   private _userRest = new UserRest();
   constructor(

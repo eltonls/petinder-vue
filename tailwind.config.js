@@ -28,7 +28,9 @@ export default {
         'slide-in-right': 'slideInRight 1s ease-out forwards',
       },
       colors: {
-        filterBar: {home: '#414267'}
+        filterBar: {home: '#414267'},
+        'purple': '#585ABF',
+        'secondary': '#F3A04C',
       }
     },
   },

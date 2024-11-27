@@ -16,9 +16,8 @@ import OverlayBadge from "primevue/overlaybadge";
 import Popover from "primevue/popover";
 import Menubar from "primevue/menubar";
 import Avatar from "primevue/avatar";
-import Badge from 'primevue/badge';
-
-
+import Badge from "primevue/badge";
+import Textarea from "primevue/textarea";
 import type { App } from "vue";
 
 export default function setPrimeComponent(app: App): void {
@@ -38,8 +37,8 @@ export default function setPrimeComponent(app: App): void {
   app.component("Dialog", Dialog);
   app.component("OverlayBadge", OverlayBadge);
   app.component("Popover", Popover);
-  app.component('MenuBar', Menubar);
+  app.component("MenuBar", Menubar);
   app.component("Avatar", Avatar);
   app.component("Badge", Badge);
-
+  app.component("Textarea", Textarea);
 }

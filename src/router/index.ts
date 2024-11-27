@@ -3,6 +3,7 @@ import Home from '../views/Home/home.vue'
 import Login from '../views/Login/login.vue'
 import Register from '@/views/Register/register.vue'
 import Profile from '@/views/Profile/profile.vue'
+import Chat from "@/views/Chat/index.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,14 @@ const router = createRouter({
       meta: {
         hasNavBar: true
       }
+    },
+    {
+      path: '/chat',
+      name: 'chat',
+      component: Chat,
+      meta: {
+        hasNavBar: true
+      } 
     }
   ]
 })

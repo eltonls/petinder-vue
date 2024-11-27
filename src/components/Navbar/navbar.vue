@@ -1,11 +1,14 @@
 <template>
   <main>
     <nav
-      class="flex items-center justify-between flex-wrap py-5 px-2 font-sans bg-indigo-500"
+      class="flex items-center justify-between flex-wrap bg-purple p-4 flex-shrink-0"
     >
       <div class="font-bold animate-slide-in-left">
         <RouterLink to="/">
-          <p class="text-2xl font-display text-white">Petinder</p>
+          <span
+            class="text-white font-display !text-4xl animate-slide-in-left hover:text-orange duration-500"
+            >Petinder</span
+          >
         </RouterLink>
       </div>
       <ul class="flex gap-5 text-white font-bold">
@@ -26,6 +29,7 @@
           <i
             class="pi pi-envelope text-white cursor-pointer !transition-all !duration-200 hover:rounded-none hover:text-orange-400"
             style="font-size: 1.7rem"
+            @click="redirectToChat"
           ></i>
           <span class="relative">
 
@@ -82,11 +86,11 @@
           <template #item="{ item, props, hasSubmenu, root }">
             <a v-ripple class="flex items-center" v-bind="props.action">
               <span v-if="item.label" class="font-bold tracking-wide">{{
-                item.label
+                item.label 
               }}</span>
               <i
                 v-if="item.icon && item.icon !== 'pi pi-user'"
-                :class="item.icon"
+                :class="item.icon" @click="item.command"
               ></i>
               <div
                 v-if="item.icon === 'pi pi-user'"
