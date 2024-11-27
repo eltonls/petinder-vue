@@ -30,6 +30,10 @@ class PetRest {
     return fromPromise(supabase.from("pets").insert(pet));
   }
 
+  getPetById(id: string): Observable<any> {
+    return fromPromise(supabase.from("pets").select().eq("id", id));
+  }
+
   updatePet(pet: Pet): Observable<any> {
     return fromPromise(supabase.from("pets").update(pet).eq("id", pet.id));
   }

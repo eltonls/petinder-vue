@@ -185,8 +185,3 @@ export default defineComponent({
     }
 })
 </script>
-<!-- <style scoped>
-.p-select.p-disabled {
-    background-color: #e2e8f0 !important
-}
-</style> -->
