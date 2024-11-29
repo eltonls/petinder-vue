@@ -40,8 +40,8 @@
                                 :disabled="!editEnabled" placeholder="Selecione a cidade"
                                 class="!bg-white !text-black h-[45px] w-full" />
                             <p :class="v$.user.adress.$error
-                                    ? 'opacity-100'
-                                    : '-translate-y-6 opacity-0 invisible'
+                                ? 'opacity-100'
+                                : '-translate-y-6 opacity-0 invisible'
                                 " class="text-xs text-red-400 transition-all">
                                 Cidade inválida. Selecione uma cidade.
                             </p>
@@ -65,6 +65,24 @@
                     label="Cancelar" @click="editEnabled = false" />
             </div>
         </form>
+        <div class="mt-10">
+            <Tabs value="0">
+                <TabList class="flex justify-between">
+                    <Tab v-for="tab in tabs" :key="tab.title" :value="tab.value" @click="toggleGetTab(tab.value)">{{
+                        tab.title }}</Tab>
+                </TabList>
+                <TabPanels>
+                    <TabPanel v-for="(tab, i) in tabs" :key="i" :value="tab.value" class="text-center">
+                        <div v-for="pet in pets" class="inline-flex">
+                            <PetCard :pet="pet" :pageType="'profile'" @response="(value: any) => profilePet = value"
+                                @click="setStateDialog(true)" />
+                        </div>
+                    </TabPanel>
+                </TabPanels>
+            </Tabs>
+        </div>
+        <DetailDialog :isVisible="isVisibleDetailDialog" :pet="profilePet" :pageType="'profile'"
+            @closeDialog="setStateDialog" @deletePet="deletePet" />
     </main>
 </template>
 <script lang="ts">
@@ -78,6 +96,8 @@ import { Toasts } from "@/utils/toast.util";
 import { take } from "rxjs";
 import LocalStorageUtil from "@/utils/localStorage.util";
 import ProfileService from "./profile.service";
+import Pet from "@/models/pet.model";
+import { HomeService } from "../Home/home.service";
 
 export default defineComponent({
     validations() {
@@ -86,7 +106,7 @@ export default defineComponent({
                 username: { required, minLength: minLength(3), validateName },
                 phone: { required, minLength: minLength(10), validatePhone },
                 adress: { required }
-            },
+            }
         };
     },
     data() {
@@ -99,6 +119,13 @@ export default defineComponent({
             showToast: new Toasts(),
             editEnabled: false,
             isUpdateUser: false,
+            tabs: [
+                { title: 'Pets Cadastrados', value: '0' },
+                { title: 'Pets Adotados', value: '1' }
+            ],
+            pets: [] as Array<Pet>,
+            isVisibleDetailDialog: false,
+            profilePet: new Pet()
         }
     },
     methods: {
@@ -173,20 +200,52 @@ export default defineComponent({
             const user: any = this.localStorage.getItem("user");
             this.userEmail = user.email;
             return user?.id;
+        },
+        toggleGetTab(value: string) {
+            const userId = (this.localStorage.getItem('user') as User).id as string
+            if (value === '0') {
+                this.getRegisteredPetsByUser(userId);
+            } else {
+                this.getAdoptedPetsByOnwer(userId);
+            }
+        },
+        getRegisteredPetsByUser(id: string) {
+            this.petService.pets.pipe().subscribe({
+                next: (response) => {
+                    this.pets = response.data;
+                }
+            });
+            this.petService.getRegisteredPetsByUser(id);
+        },
+        getAdoptedPetsByOnwer(id: string) {
+            this.petService.pets.pipe().subscribe({
+                next: (response) => {
+                    this.pets = response.data;
+                }
+            });
+            this.petService.getAdoptedPetsByOnwer(id);
+        },
+        setStateDialog(state: boolean): void {
+            this.isVisibleDetailDialog = state;
+        },
+        deletePet(pet: Pet): void {
+            this.petService.deleteAdoption(pet.id!);
+            this.petService.deletePet(pet);
+            this.pets.splice(this.pets.indexOf(pet), 1)
+            this.setStateDialog(false);
         }
     },
     computed: {
         service(): ProfileService {
             return new ProfileService();
         },
+        petService(): HomeService {
+            return new HomeService();
+        },
     },
     mounted() {
         this.getUserById();
+        this.toggleGetTab('0');
     }
 })
 </script>
-<!-- <style scoped>
-.p-select.p-disabled {
-    background-color: #e2e8f0 !important
-}
-</style> -->

@@ -1,6 +1,6 @@
 import { fromPromise } from "rxjs/internal/observable/innerFrom";
 import supabase from "../api-config/setup";
-import Pet, { AgeRange, Breed, GenderPet } from "@/models/pet.model";
+import Pet, { AgeRange, Breed, GenderPet, PetStatus } from "@/models/pet.model";
 import type { Observable } from "rxjs";
 
 class PetRest {
@@ -34,8 +34,19 @@ class PetRest {
     return fromPromise(supabase.from("pets").update(pet).eq("id", pet.id));
   }
 
-  deletePet(id: number): Observable<any> {
-    return fromPromise(supabase.from("pets").delete().eq("id", id));
+  deletePet(pet: Pet): Observable<any> {
+    pet.pet_status = PetStatus.INACTIVE;
+    return fromPromise(supabase.from("pets").update(pet).eq("id", pet.id));
+  }
+
+  getRegisteredPetsByUser(userId: string) {
+    let query = supabase.from("pets").select("").eq("user_id", userId).eq("pet_status", PetStatus.ACTIVE);
+    return fromPromise(query);
+  }
+
+  getAdoptedPetsByOnwer(ownerId: string) {
+    let query = supabase.from("pets").select("").eq("owner_id", ownerId).eq("pet_status", PetStatus.ACTIVE);
+    return fromPromise(query);
   }
 }
 

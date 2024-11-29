@@ -9,7 +9,8 @@ export default class Pet{
         public created_at: Date = new Date,
         public id?: number,
         public owner_id?: string,
-        public user_id?: string
+        public user_id?: string,
+        public pet_status?: PetStatus
     ){}
 }
 
@@ -36,4 +37,9 @@ export enum Breed {
     Insects = "Insetos",
     Arachnids = "Aracnídeos",
     Others = "Outros"
+}
+
+export enum PetStatus {
+    ACTIVE = "ACTIVE",
+    INACTIVE = "INACTIVE"
 }
